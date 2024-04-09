@@ -26,6 +26,15 @@
 1. 创建自定义异常`ErxingException`；
 2. 支持自定义错误枚举扩展；
 3. 重写Assert类，支持Assert后自定义异常文本输出；
+    > 核心接口为ErxingExceptionAssert,断言功能:
+    > - 断言布尔表达式真假
+    > - 断言对象是否null
+    > - 断言String、Array、Collection、Map是否empty
+    > - 断言String、String[]、Collection<String>是否包含text
+    > - 断言Array、Collection是否存在任意Null元素
+    > - 断言Map<String,Object>是否存在某个key真假
+    > - 断言2个可比较对象的大小
+
 4. 引入`@RestControllerAdvice`,自动捕获异常及处理；
 5. 封装通用返回值对象（所有项目均可使用）；
 ```java
