@@ -149,7 +149,8 @@ public class SyncBaseDataController {
 因不同项目的包路径和异常捕获方法不同,response也不同,所以没有在本项目加入默认返回值修改逻辑。
 如有需要，可复制以下代码.
 
-注意：需要修改`controller`路径，返回值`R`为本包的`R`对象
+注意：需要修改`controller`路径，返回值`R`为本包的`R`对象.
+
 **AOP代码：**
 ```java
 
