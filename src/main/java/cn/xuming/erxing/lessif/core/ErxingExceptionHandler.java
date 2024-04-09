@@ -8,15 +8,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * 仅处理customerException
  *
- * @Author: 徐铭
- * @Date: 2024-03-26 00:09
+ * @author : 徐铭
+ * @since: 2024-03-26 00:09
  */
 @Slf4j
 @RestControllerAdvice
 public class ErxingExceptionHandler {
 
     /**
-     * 自定义异常
+     * 监听到自定义异常,则自动返回错误响应
+     * @param e 自定义异常
+     * @return 通用错误响应
      */
     @ExceptionHandler(ErxingException.class)
     public R<Void> handleCustomException(ErxingException e) {

@@ -6,13 +6,14 @@ import lombok.Data;
 import java.text.MessageFormat;
 
 /**
- * @Author: 徐铭
- * @Date: 2024-03-26 00:09
+ * 自定义异常
+ * @author : 徐铭
+ * @since: 2024-03-26 00:09
  */
 
 @AllArgsConstructor
 @Data
-public class ErxingException extends RuntimeException{
+public class ErxingException extends RuntimeException {
 
     /**
      * 具体异常码
@@ -24,10 +25,10 @@ public class ErxingException extends RuntimeException{
      */
     protected String message;
 
-    public ErxingException(ErxingExceptionAssertEnum exceptionAssertEnum, Object... objs){
-        super(MessageFormat.format(exceptionAssertEnum.getMessage(),objs));
-        this.code=exceptionAssertEnum.getCode();
-        this.message=MessageFormat.format(exceptionAssertEnum.getMessage(),objs);
+    public ErxingException(ErxingExceptionAssert exceptionAssertEnum, Object... objs) {
+        super(MessageFormat.format(exceptionAssertEnum.getMessage(), objs));
+        this.code = exceptionAssertEnum.getCode();
+        this.message = MessageFormat.format(exceptionAssertEnum.getMessage(), objs);
 
     }
 

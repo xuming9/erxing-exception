@@ -4,16 +4,48 @@
 
     <groupId>io.github.xuming9</groupId>
     <artifactId>erxing-less-if</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>erxing-less-if</name>
+    <description>让代码减少if</description>
+    <!--项目访问url -->
     <url>https://github.com/xuming9/erxing-less-if</url>
+    <scm>
+        <!--项目访问url -->
+        <url>https://github.com/xuming9/erxing-less-if</url>
+        <!--项目访问url.git结尾 -->
+        <connection>scm:git:https://github.com/xuming9/erxing-less-if.git</connection>
+        <!--项目访问url.git结尾 -->
+        <developerConnection>scm:git:https://github.com/xuming9/erxing-less-if.git</developerConnection>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>xuming</id>
+            <name>xuming</name>
+            <email>xuming9@163.com</email>
+            <!--项目访问url -->
+            <url>https://github.com/xuming9/erxing-less-if</url>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <serverId>central</serverId><!-- 服务id 也就是setting.xml中的servers.server.id -->
     </properties>
 
     <dependencies>
@@ -37,7 +69,8 @@
         </dependency>
     </dependencies>
 
-
+    <!-- 以下配置用于发布到sonatype中央仓库 -->
+    <!-- 发布教程: http://t.csdnimg.cn/KSbmW -->
     <build>
         <plugins>
             <plugin>
@@ -45,17 +78,74 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <!-- Source -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Javadoc -->
+            <!-- Gpg Signature -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.4.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>sonatype</publishingServerId>
+                    <tokenAuth>true</tokenAuth>
                 </configuration>
             </plugin>
         </plugins>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
     </build>
+    <distributionManagement>
+        <snapshotRepository>
+            <!-- 与settings.xml的server.id保持一致 -->
+            <id>sonatype</id>
+            <url>https://central.sonatype.com/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>

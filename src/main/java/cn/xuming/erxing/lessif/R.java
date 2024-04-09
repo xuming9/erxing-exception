@@ -1,6 +1,6 @@
 package cn.xuming.erxing.lessif;
 
-import cn.xuming.erxing.lessif.constant.CommonContans;
+import cn.xuming.erxing.lessif.constant.CommonConstants;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,13 +8,14 @@ import lombok.Data;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 
 
 /**
  * 通用请求响应
- * @Author: 徐铭
- * @Date: 2024-03-26 00:09
+ *
+ * @author : 徐铭
+ * @since: 2024-03-26 00:09
  **/
 @Data
 @AllArgsConstructor
@@ -73,36 +74,38 @@ public class R<T> implements Serializable {
     }
 
     public static R<Void> ok() {
-        return new R<>(true, CommonContans.SUCCESS_CODE, CommonContans.SUCCESS_MSG);
+        return new R<>(true, CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MSG);
     }
 
     public static <T> R<T> ok(T data) {
-        return new R<>(true, CommonContans.SUCCESS_CODE, CommonContans.SUCCESS_MSG, data);
+        return new R<>(true, CommonConstants.SUCCESS_CODE, CommonConstants.SUCCESS_MSG, data);
     }
 
     /**
      * 如果返回对象为集合，则 msg =请求成功,数据共{0}行
-     * @param data
-     * @return
-     * @param <T>
+     *
+     * @param data 返回集合
+     * @param <T> 集合对象
+     * @return 请求响应对象
      */
-    public static <T> R<Collection<T>> okList(Collection<T> data) {
-        return R.ok(MessageFormat.format(CommonContans.SUCCESS_LIST_MSG,(null==data?0:data.size())),data);
+    public static <T> R<List<T>> okList(List<T> data) {
+        return R.ok(MessageFormat.format(CommonConstants.SUCCESS_LIST_MSG, (null == data ? 0 : data.size())), data);
     }
 
-    public static <T> R<T> ok(String msg,T data) {
-        return new R<>(true, CommonContans.SUCCESS_CODE, msg, data);
+    public static <T> R<T> ok(String msg, T data) {
+        return new R<>(true, CommonConstants.SUCCESS_CODE, msg, data);
     }
 
     public static R<Void> fail() {
-        return new R<>(false, CommonContans.ERROR_CODE, CommonContans.ERROR_MSG);
+        return new R<>(false, CommonConstants.ERROR_CODE, CommonConstants.ERROR_MSG);
     }
 
-    public static  <T> R<T> fail(T t) {
-        return new R<>(false, CommonContans.ERROR_CODE , CommonContans.ERROR_MSG , t);
+    public static <T> R<T> fail(T t) {
+        return new R<>(false, CommonConstants.ERROR_CODE, CommonConstants.ERROR_MSG, t);
     }
+
     public static R<Void> fail(String msg) {
-        return new R<>(false, CommonContans.ERROR_MSG, msg);
+        return new R<>(false, CommonConstants.ERROR_MSG, msg);
     }
 
     public static R<Void> fail(String code, String msg) {
