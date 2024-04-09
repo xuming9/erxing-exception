@@ -88,7 +88,7 @@ public class R<T> implements Serializable {
 <dependency>
     <groupId>io.github.xuming9</groupId>
     <artifactId>erxing-less-if</artifactId>
-    <version>${erxing.version}</version>
+    <version>1.0</version>
 </dependency>
 ```
 ### 第二步 创建自定义错误枚举
