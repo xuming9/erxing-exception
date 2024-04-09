@@ -20,7 +20,7 @@
     Assert.isNotNull(user);
 ```
 网上大部分教程,只做到了通过断言,减少if的代码,但没有自定义错误说明的功能。
-本项目是参考`枚举+断言`的思路，增加自定义错误工，并且封装`枚举+断言`必须的代码，使用时仅需扩展自定义错误。
+本项目是参考`枚举+断言`的思路，增加自定义错误功能，并且封装`枚举+断言`必须的代码，使用时仅需扩展自定义错误。
 
 ## 二、功能介绍
 1. 创建自定义异常`ErxingException`；
@@ -114,7 +114,7 @@ public enum CustomExceptionAssertEnum implements ErxingExceptionAssert {
 ```
 
 ### 第三步 枚举使用方式
-将`if(null==)`替换为`ACCOUNT_DB_NOT_EXISTS.isNull`
+将`if(null==)`替换为`ACCOUNT_DB_NOT_EXISTS.isNotNull`
 
 **示例:**
 ```java
@@ -129,6 +129,7 @@ public class SyncBaseDataController {
 
     /**
      * 201-计量单位
+     * @param account 账套名称
      *
      */
     @ApiOperationSupport(order = 201)
