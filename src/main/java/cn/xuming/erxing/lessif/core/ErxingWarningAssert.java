@@ -1,4 +1,4 @@
-package cn.xuming.erxing.core;
+package cn.xuming.erxing.lessif.core;
 
 
 import java.text.MessageFormat;
@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 public interface ErxingWarningAssert {
 
-    Logger logger = Logger.getLogger(cn.xuming.erxing.core.ErxingWarningAssert.class.getName());
+    Logger logger = Logger.getLogger(ErxingWarningAssert.class.getName());
 
     /**
      * 获取异常状态码
@@ -43,6 +43,7 @@ public interface ErxingWarningAssert {
      * <p>异常信息<code>args</code>支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param expression 待判断对象
+     * @param args message占位符对应的参数列表
      * @return true验证通过, false验证不通过
      */
     default boolean isTrue(boolean expression, Object... args) {
@@ -58,6 +59,7 @@ public interface ErxingWarningAssert {
      * <p>异常信息<code>args</code>支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param expression 待判断对象
+     * @param args message占位符对应的参数列表
      * @return true验证通过, false验证不通过
      */
     default boolean isFalse(boolean expression, Object... args) {
@@ -110,7 +112,7 @@ public interface ErxingWarningAssert {
      * @return true验证通过, false验证不通过
      */
     default boolean isNotEmpty(String text, Object... args) {
-        if (text == null || text.length() == 0) {
+        if (text == null || text.isEmpty()) {
             print(args);
             return false;
         }
@@ -142,7 +144,7 @@ public interface ErxingWarningAssert {
      * @return true验证通过, false验证不通过
      */
     default boolean isNotEmpty(Collection<?> collection, Object... args) {
-        if (collection == null || collection.size() == 0) {
+        if (collection == null || collection.isEmpty()) {
             print(args);
             return false;
         }
@@ -159,7 +161,7 @@ public interface ErxingWarningAssert {
      * @return true验证通过, false验证不通过
      */
     default boolean isNotEmpty(Map<?, ?> map, Object... args) {
-        if (map == null || map.size() == 0) {
+        if (map == null || map.isEmpty()) {
             print(args);
             return false;
         }
@@ -175,7 +177,7 @@ public interface ErxingWarningAssert {
      * @return true验证通过, false验证不通过
      */
     default boolean isEmpty(String text, Object... args) {
-        if (text != null && text.length() > 0) {
+        if (text != null && !text.isEmpty()) {
             print(args);
             return false;
         }
@@ -207,7 +209,7 @@ public interface ErxingWarningAssert {
      * @return true验证通过, false验证不通过
      */
     default boolean isEmpty(Collection<?> collection, Object... args) {
-        if (collection != null && collection.size() > 0) {
+        if (collection != null && !collection.isEmpty()) {
             print(args);
             return false;
         }
@@ -224,7 +226,7 @@ public interface ErxingWarningAssert {
      * @return true验证通过, false验证不通过
      */
     default boolean isEmpty(Map<?, ?> map, Object... args) {
-        if (map != null && map.size() > 0) {
+        if (map != null && !map.isEmpty()) {
             print(args);
             return false;
         }
@@ -479,16 +481,17 @@ public interface ErxingWarningAssert {
         }
     }
 
-    /**
-     * 比较符号枚举<p>
-     * - EQ 等于     =<p>
-     * - NE 不等于   <><p>
-     * - GT 大于     ><p>
-     * - GE 大于等于 >=<p>
-     * - LT 小于     <<p>
-     * - LE 小于等于 <=
-     */
+
     enum CompareSymbolEnum {
+        /**
+         * 比较符号枚举<p>
+         * - EQ 等于     =<p>
+         * - NE 不等于   <><p>
+         * - GT 大于     ><p>
+         * - GE 大于等于 >=<p>
+         * - LT 小于     <<p>
+         * - LE 小于等于 <=
+         */
         LT, LE, EQ, NE, GE, GT;
     }
 
