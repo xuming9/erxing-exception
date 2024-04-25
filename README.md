@@ -1,31 +1,118 @@
-# erxing-exception
+# erxing-less-if
+
+>　**道虽迩，不行不至；事虽小，不为不成**
+> 
+>　　　　　　　　　　　　　　　──《荀子·修身》
+
+## 一、背景介绍
+在开发过程中，经常需要对数据进行判断与校验（密码错误，账号不存在），不通过则需要抛出异常。
+```java
+    User user = userDao.findUserByUsername(username);
+    if(null==user){
+        throw new RuntimeException(username+"不存在");
+    }
+```
+正常情况下是需要用`if`或者`try-catch`，然后`throw`异常。代码本身没问题，但写多了以后会很烦，代码也不优雅。
+网上很多优雅写代码的教程，其中利用`枚举+断言`就可以解决此问题。
+```java
+    User user = userDao.findUserByUsername(username);
+    //网上常见教程效果  
+    Assert.isNotNull(user);
+```
+网上大部分教程,只做到了通过断言,减少if的代码,但没有自定义错误说明的功能。
+本项目是参考`枚举+断言`的思路，增加自定义错误功能，并且封装`枚举+断言`必须的代码，使用时仅需扩展自定义错误。
+
+## 二、功能介绍
+1. 创建自定义异常`ErxingException`；
+2. 支持自定义错误枚举扩展；
+3. 重写Assert类，支持Assert后自定义异常文本输出；
+    > 核心接口为ErxingExceptionAssert,断言功能:
+    > - 断言布尔表达式真假
+    > - 断言对象是否null
+    > - 断言String、Array、Collection、Map是否empty
+    > - 断言String、String[]、Collection<String>是否包含text
+    > - 断言Array、Collection是否存在任意Null元素
+    > - 断言Map<String,Object>是否存在某个key真假
+    > - 断言2个可比较对象的大小
+
+4. 引入`@RestControllerAdvice`,自动捕获异常及处理；
+5. 封装通用返回值对象（所有项目均可使用）；
+```java
+public class R<T> implements Serializable {
+
+    /**
+     * 返回时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime timestamp;
+    /**
+     * 消耗时间
+     */
+    private String elapsed;
+    /**
+     * 接口成功标志
+     */
+    private boolean success;
+    /**
+     * 错误代码
+     */
+    private String code;
+    /**
+     * 错误提示，用户可阅读
+     */
+    private String msg;
+    /**
+     * 返回数据
+     */
+    private T data;
+
+    //已封装静态方法如下
+    public static R<Void> ok();
+    public static <T> R<T> ok(T data) ;
+
+    public static <T> R<T> ok(String msg,T data);
+    public static R<Void> fail() ;
+    public static  <T> R<T> fail(T t) ;
+    public static R<Void> fail(String msg);
+    public static R<Void> fail(String code, String msg);
+
+    /**
+     * 如果返回对象为集合，则 msg =请求成功,数据共{0}行
+     * @param data
+     * @return
+     * @param <T>
+     */
+    public static <T> R<Collection<T>> okList(Collection<T> data) {
+        return R.ok(MessageFormat.format(SUCCESS_LIST_MSG,(null==data?0:data.size())),data);
+    }
+}
+
+```
 
 
+## 三、使用方法
+
+### 第一步 引入依赖
+```xml
+<dependency>
+    <groupId>io.github.xuming9</groupId>
+    <artifactId>erxing-less-if</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+### 第二步 创建自定义错误枚举
+自定义枚举必须实现接口`cn.xuming.erxing.lessif.core.ErxingExceptionAssert`
+
+示例:
 
 后续自定义枚举
 ```java
 
-/**
- *
- * @Author: 徐铭
- * @Date: 2024-03-26 00:09
- */
 @AllArgsConstructor
 @Getter
 public enum CustomExceptionAssertEnum implements ErxingExceptionAssert {
-    /**
-     * 自定义异常
-     */
-//    USER_NOT_EXISTS(1011, "登陆账号【{0}】不存在"),
-//    USER_EXISTS(1012, "登陆账号【{0}】已存在"),
-//    USER_TEL_EXISTS(1013, "登陆账号手机【{0}】已存在"),
-//    USERNAME_EMPTY(1014, "登陆账号不能为空"),
-//    PASSWORD_EXPIRED(1015, "登陆账号【{0}】密码已过期，请修改密码后登陆"),
-//    PASSWORD_EMPTY(1016, "密码不能为空."),
-//    PASSWORD_LENGTH(1017, "密码长度不够"),
-
+    
     ACCOUNT_DB_NOT_EXISTS("E10001","账套编码(不区分大小写)【{0}】不存在"),
-
     ;
 
     private final String code;
@@ -35,8 +122,45 @@ public enum CustomExceptionAssertEnum implements ErxingExceptionAssert {
 
 ```
 
+### 第三步 枚举使用方式
+将`if(null==)`替换为`ACCOUNT_DB_NOT_EXISTS.isNotNull`
 
-自动注入请求返回值
+**示例:**
+```java
+
+@RestController
+@RequestMapping("/sync/")
+@Slf4j
+@RequiredArgsConstructor
+public class SyncBaseDataController {
+
+    private final KisBaseDataService kisBaseDataService;
+
+    /**
+     * 201-计量单位
+     * @param account 账套名称
+     *
+     */
+    @ApiOperationSupport(order = 201)
+    @PutMapping("um")
+    public R<String> um(@RequestParam(name = "account", required = false) String account) {
+        AccountDb accountDb = AccountDb.toEnum(account);
+        ACCOUNT_DB_NOT_EXISTS.isNotNull(accountDb, account);
+        return R.ok(kisBaseDataService.um(accountDb));
+    }
+}
+```
+返回值:
+![response-error.png](response-error.png)
+
+
+### 第四步 返回值修改(手动加入代码)
+因不同项目的包路径和异常捕获方法不同,response也不同,所以没有在本项目加入默认返回值修改逻辑。
+如有需要，可复制以下代码.
+
+注意：需要修改`controller`路径，返回值`R`为本包的`R`对象.
+
+**AOP代码：**
 ```java
 
 @Aspect
@@ -71,3 +195,6 @@ public class ControllerAspect {
     }
 }
 ```
+
+## 其他注意事项
+本项目依赖了2个包，`spring-boot-starter-web`和`lombok`,在打包时做了provided处理,因此如果您的项目没有这2个包,需要手动依赖

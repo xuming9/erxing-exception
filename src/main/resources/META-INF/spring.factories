@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cn.xuming.erxing.core.ErxingExceptionHandler
+  cn.xuming.erxing.lessif.core.ErxingExceptionHandler
