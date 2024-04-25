@@ -86,9 +86,8 @@ public class R<T> implements Serializable {
         return R.ok(MessageFormat.format(SUCCESS_LIST_MSG,(null==data?0:data.size())),data);
     }
 }
-
 ```
-
+6. 警告断言:多用于校验时写日志,而非报错
 
 ## 三、使用方法
 
@@ -122,7 +121,7 @@ public enum CustomExceptionAssertEnum implements ErxingExceptionAssert {
 
 ```
 
-### 第三步 枚举使用方式
+### 第三步 错误枚举使用方式
 将`if(null==)`替换为`ACCOUNT_DB_NOT_EXISTS.isNotNull`
 
 **示例:**
@@ -196,5 +195,26 @@ public class ControllerAspect {
 }
 ```
 
+### 第五步 创建自定义警告枚举
+自定义枚举必须实现接口`cn.xuming.erxing.lessif.core.ErxingWarningAssert`
+
+示例:
+
+后续自定义枚举
+```java
+
+@AllArgsConstructor
+@Getter
+public enum CustomWarningAssertEnum implements ErxingWarningAssert {
+    
+    ACCOUNT_DB_NOT_EXISTS("W10001","账套编码(不区分大小写)【{0}】不存在"),
+    ;
+
+    private final String code;
+    private final String message;
+
+}
+
+```
 ## 其他注意事项
 本项目依赖了2个包，`spring-boot-starter-web`和`lombok`,在打包时做了provided处理,因此如果您的项目没有这2个包,需要手动依赖
