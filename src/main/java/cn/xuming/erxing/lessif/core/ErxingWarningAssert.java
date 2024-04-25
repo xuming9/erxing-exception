@@ -11,9 +11,9 @@ import java.util.logging.Logger;
  * @Author: 徐铭
  * @Date: 2024-03-26 00:09
  */
-public interface ErxingWarnAssert {
+public interface ErxingWarningAssert {
 
-    Logger logger = Logger.getLogger(ErxingWarnAssert.class.getName());
+    Logger logger = Logger.getLogger(cn.xuming.erxing.core.ErxingWarningAssert.class.getName());
 
     /**
      * 获取异常状态码
