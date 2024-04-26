@@ -208,6 +208,7 @@ public class ControllerAspect {
 public enum CustomWarningAssertEnum implements ErxingWarningAssert {
     
     ACCOUNT_DB_NOT_EXISTS("W10001","账套编码(不区分大小写)【{0}】不存在"),
+    ITEM_NOT_EXISTS("W10002","商品编码(不区分大小写)【{0}】不存在"),
     ;
 
     private final String code;
@@ -216,5 +217,17 @@ public enum CustomWarningAssertEnum implements ErxingWarningAssert {
 }
 
 ```
+### 第六步 警告枚举使用方式
+
+使用示例
+```java
+
+public boolean vlaid(String account, Integer itemId) {
+    return ACCOUNT_DB_NOT_EXISTS.isNotNull(AccountDb.toEnum(account), account)
+            && ITEM_NOT_EXISTS.isNotNull(Item.toEnum(account), account);
+}
+
+```
+
 ## 其他注意事项
 本项目依赖了2个包，`spring-boot-starter-web`和`lombok`,在打包时做了provided处理,因此如果您的项目没有这2个包,需要手动依赖
