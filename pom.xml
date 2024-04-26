@@ -4,7 +4,7 @@
 
     <groupId>io.github.xuming9</groupId>
     <artifactId>erxing-less-if</artifactId>
-    <version>1.1</version>
+    <version>1.11</version>
     <packaging>jar</packaging>
 
     <name>erxing-less-if</name>
