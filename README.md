@@ -4,6 +4,8 @@
 > 
 >　　　　　　　　　　　　　　　──《荀子·修身》
 
+<font size=5>`erxing-less-if`是`if`语句的简化版，大幅消灭`if`语句，使代码更优雅。
+</font>
 ## 一、背景介绍
 在开发过程中，经常需要对数据进行判断与校验（密码错误，账号不存在），不通过则需要抛出异常。
 ```java
@@ -13,14 +15,14 @@
     }
 ```
 正常情况下是需要用`if`或者`try-catch`，然后`throw`异常。代码本身没问题，但写多了以后会很烦，代码也不优雅。
-网上很多优雅写代码的教程，其中利用`枚举+断言`就可以解决此问题。
+网上很多优雅写代码的教程，原理是利用`枚举+断言`就可以解决此问题。
 ```java
     User user = userDao.findUserByUsername(username);
     //网上常见教程效果  
     Assert.isNotNull(user);
 ```
-网上大部分教程,只做到了通过断言,减少if的代码,但没有自定义错误说明的功能。
-本项目是参考`枚举+断言`的思路，增加自定义错误功能，并且封装`枚举+断言`必须的代码，使用时仅需扩展自定义错误。
+网上大部分教程,只做到了通过断言,减少if的代码,但没有自定义错误说明的功能,并且也没有自定义警告的功能
+本项目是参考`枚举+断言`的思路，增加自定义错误和自定义警告的功能，并且封装`枚举+断言`必须的代码，使用时仅需扩展自定义错误。
 
 ## 二、功能介绍
 1. 创建自定义异常`ErxingException`；
@@ -34,59 +36,10 @@
     > - 断言Array、Collection是否存在任意Null元素
     > - 断言Map<String,Object>是否存在某个key真假
     > - 断言2个可比较对象的大小
+    > - 断言数值类型是否为正数
 
 4. 引入`@RestControllerAdvice`,自动捕获异常及处理；
 5. 封装通用返回值对象（所有项目均可使用）；
-```java
-public class R<T> implements Serializable {
-
-    /**
-     * 返回时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private LocalDateTime timestamp;
-    /**
-     * 消耗时间
-     */
-    private String elapsed;
-    /**
-     * 接口成功标志
-     */
-    private boolean success;
-    /**
-     * 错误代码
-     */
-    private String code;
-    /**
-     * 错误提示，用户可阅读
-     */
-    private String msg;
-    /**
-     * 返回数据
-     */
-    private T data;
-
-    //已封装静态方法如下
-    public static R<Void> ok();
-    public static <T> R<T> ok(T data) ;
-
-    public static <T> R<T> ok(String msg,T data);
-    public static R<Void> fail() ;
-    public static  <T> R<T> fail(T t) ;
-    public static R<Void> fail(String msg);
-    public static R<Void> fail(String code, String msg);
-
-    /**
-     * 如果返回对象为集合，则 msg =请求成功,数据共{0}行
-     * @param data
-     * @return
-     * @param <T>
-     */
-    public static <T> R<Collection<T>> okList(Collection<T> data) {
-        return R.ok(MessageFormat.format(SUCCESS_LIST_MSG,(null==data?0:data.size())),data);
-    }
-}
-```
 6. 警告断言:多用于校验时写日志,而非报错
 
 ## 三、使用方法
@@ -233,4 +186,55 @@ public boolean vlaid(String account, Integer itemId) {
 本项目依赖了2个包，`spring-boot-starter-web`和`lombok`,在打包时做了provided处理,因此如果您的项目没有这2个包,需要手动依赖
 
 
-## API
+## 通用返回值对象
+
+```java
+public class R<T> implements Serializable {
+
+    /**
+     * 返回时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime timestamp;
+    /**
+     * 消耗时间
+     */
+    private String elapsed;
+    /**
+     * 接口成功标志
+     */
+    private boolean success;
+    /**
+     * 错误代码
+     */
+    private String code;
+    /**
+     * 错误提示，用户可阅读
+     */
+    private String msg;
+    /**
+     * 返回数据
+     */
+    private T data;
+
+    //已封装静态方法如下
+    public static R<Void> ok();
+    public static <T> R<T> ok(T data) ;
+
+    public static <T> R<T> ok(String msg,T data);
+    public static R<Void> fail() ;
+    public static  <T> R<T> fail(T t) ;
+    public static R<Void> fail(String msg);
+    public static R<Void> fail(String code, String msg);
+
+    /**
+     * 如果返回对象为集合，则 msg =请求成功,数据共{0}行
+     * @param data
+     * @return
+     * @param <T>
+     */
+    public static <T> R<Collection<T>> okList(Collection<T> data) {
+        return R.ok(MessageFormat.format(SUCCESS_LIST_MSG,(null==data?0:data.size())),data);
+    }
+}
+```

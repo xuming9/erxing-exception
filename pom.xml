@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>erxing-less-if</name>
-    <description>让代码减少if</description>
+    <description>大量消灭代码中的if</description>
     <!--项目访问url -->
     <url>https://github.com/xuming9/erxing-less-if</url>
     <scm>
