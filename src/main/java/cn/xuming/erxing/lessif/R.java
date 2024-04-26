@@ -85,7 +85,7 @@ public class R<T> implements Serializable {
      * 如果返回对象为集合，则 msg =请求成功,数据共{0}行
      *
      * @param data 返回集合
-     * @param <T> 集合对象
+     * @param <T>  集合对象
      * @return 请求响应对象
      */
     public static <T> R<List<T>> okList(List<T> data) {

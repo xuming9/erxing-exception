@@ -7,7 +7,8 @@ import java.util.Map;
 
 /**
  * 异常断言接口
- * @author  : 徐铭
+ *
+ * @author : 徐铭
  * @since: 2024-03-26 00:09
  */
 public interface ErxingExceptionAssert {
@@ -47,7 +48,7 @@ public interface ErxingExceptionAssert {
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param expression 待判断对象
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args       message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void isTrue(boolean expression, Object... args) {
         if (!expression) {
@@ -60,7 +61,7 @@ public interface ErxingExceptionAssert {
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param expression 待判断对象
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args       message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void isFalse(boolean expression, Object... args) {
         if (expression) {
@@ -113,7 +114,7 @@ public interface ErxingExceptionAssert {
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param array 待判断数组
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args  message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void isNotEmpty(Object[] array, Object... args) {
         if (array == null || array.length == 0) {
@@ -126,7 +127,7 @@ public interface ErxingExceptionAssert {
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param collection 待判断集合
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args       message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void isNotEmpty(Collection<?> collection, Object... args) {
         if (collection == null || collection.size() == 0) {
@@ -166,7 +167,7 @@ public interface ErxingExceptionAssert {
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param array 待判断数组
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args  message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void isEmpty(Object[] array, Object... args) {
         if (array != null && array.length > 0) {
@@ -179,7 +180,7 @@ public interface ErxingExceptionAssert {
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param collection 待判断集合
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args       message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void isEmpty(Collection<?> collection, Object... args) {
         if (collection != null && collection.size() > 0) {
@@ -208,7 +209,7 @@ public interface ErxingExceptionAssert {
      *
      * @param text    待判断对象
      * @param subText 待判断对象
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args    message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void contain(String text, String subText, Object... args) {
         if (text == null || subText == null || !text.contains(subText)) {
@@ -223,7 +224,7 @@ public interface ErxingExceptionAssert {
      *
      * @param text    待判断对象
      * @param subText 待判断对象
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args    message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void notContain(String text, String subText, Object... args) {
         if (text != null && subText != null && text.contains(subText)) {
@@ -239,7 +240,7 @@ public interface ErxingExceptionAssert {
      *
      * @param text  待判断对象
      * @param array 待判断对象
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args  message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void contain(String text, String[] array, Object... args) {
         if (text == null || array == null || !Arrays.asList(array).contains(text)) {
@@ -254,7 +255,7 @@ public interface ErxingExceptionAssert {
      *
      * @param text  待判断对象
      * @param array 待判断对象
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args  message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void notContain(String text, String[] array, Object... args) {
         if (text != null && array != null && Arrays.asList(array).contains(text)) {
@@ -269,7 +270,7 @@ public interface ErxingExceptionAssert {
      *
      * @param text       待判断对象
      * @param collection 待判断对象
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args       message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void contain(String text, Collection<String> collection, Object... args) {
         if (text == null || collection == null || !collection.contains(text)) {
@@ -284,7 +285,7 @@ public interface ErxingExceptionAssert {
      *
      * @param text       待判断对象
      * @param collection 待判断对象
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args       message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void notContain(String text, Collection<String> collection, Object... args) {
         if (text != null && collection != null && collection.contains(text)) {
@@ -327,7 +328,7 @@ public interface ErxingExceptionAssert {
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param array 待判断对象
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args  message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void noNullElements(Object[] array, Object... args) {
         if (array == null) {
@@ -346,7 +347,7 @@ public interface ErxingExceptionAssert {
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param collection 待判断对象
-     * @param args message占位符对应的参数列表,用于拼接错误信息(不定参)
+     * @param args       message占位符对应的参数列表,用于拼接错误信息(不定参)
      */
     default void noNullElements(Collection<?> collection, Object... args) {
         if (collection == null) {
@@ -367,7 +368,7 @@ public interface ErxingExceptionAssert {
      * @param target 比较值或者标准值,一般为常量或者固定值
      * @param csEnum 期望断言结果
      * @param args   message占位符对应的参数列表
-     * @param <T> Comparable子类
+     * @param <T>    Comparable子类
      */
     default <T extends Comparable<T>> void compare(T source, T target, CompareSymbolEnum csEnum, Object... args) {
         if (source == null) {
@@ -417,7 +418,7 @@ public interface ErxingExceptionAssert {
      * - GT 大于     <p>
      * - GE 大于等于 <p>
      * - LT 小于     <p>
-     * - LE 小于等于 
+     * - LE 小于等于
      */
     enum CompareSymbolEnum {
         LT, LE, EQ, NE, GE, GT;

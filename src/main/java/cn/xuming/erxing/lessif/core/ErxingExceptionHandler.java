@@ -17,6 +17,7 @@ public class ErxingExceptionHandler {
 
     /**
      * 监听到自定义异常,则自动返回错误响应
+     *
      * @param e 自定义异常
      * @return 通用错误响应
      */

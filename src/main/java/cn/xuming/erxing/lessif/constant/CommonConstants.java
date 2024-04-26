@@ -2,6 +2,7 @@ package cn.xuming.erxing.lessif.constant;
 
 /**
  * 公共
+ *
  * @author : 徐铭
  * @since: 2024-03-27 00:55
  **/

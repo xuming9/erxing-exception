@@ -7,6 +7,7 @@ import java.text.MessageFormat;
 
 /**
  * 自定义异常
+ *
  * @author : 徐铭
  * @since: 2024-03-26 00:09
  */
