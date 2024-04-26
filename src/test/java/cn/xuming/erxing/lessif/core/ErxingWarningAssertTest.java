@@ -6,7 +6,7 @@ import lombok.Getter;
 
 /**
  * @author: 徐铭
- * @date: 2024-04-26 10:39:39
+ * @since: 2024-04-26 10:39:39
  **/
 public class ErxingWarningAssertTest extends TestCase {
 

@@ -1,5 +1,7 @@
 package cn.xuming.erxing.lessif.core;
 
+import cn.xuming.erxing.lessif.constant.CompareSymbolEnum;
+
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
@@ -95,7 +97,6 @@ public interface ErxingExceptionAssert {
         }
     }
 
-
     /**
      * <p>断言字符串text非空字符串。如果字符串text为空或空字符串，则抛出异常
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
@@ -135,9 +136,8 @@ public interface ErxingExceptionAssert {
         }
     }
 
-
     /**
-     * <p>断言Mapmap非空Map。如果Mapmap为空Map，则抛出异常
+     * <p>断言map非空。如果map为空，则抛出异常
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param map  待判断Map
@@ -187,7 +187,6 @@ public interface ErxingExceptionAssert {
             throw newException(args);
         }
     }
-
 
     /**
      * <p>断言Mapmap为空Map。如果Mapmap为非空Map，则抛出异常
@@ -294,7 +293,7 @@ public interface ErxingExceptionAssert {
     }
 
     /**
-     * <p>断言MAPmap中KEY包含text。如果字符串数组map不包含text，则抛出异常
+     * <p>断言map中KEY包含text。如果字符串数组map不包含text，则抛出异常
      * text,map任意一个为NULL，则直接判定不包含,抛出异常
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
@@ -309,7 +308,7 @@ public interface ErxingExceptionAssert {
     }
 
     /**
-     * <p>断言MAPmap中KEY不包含text。如果字符串数组map包含text，则抛出异常
+     * <p>断言map中KEY不包含text。如果字符串数组map包含text，则抛出异常
      * text,map任意一个为NULL，则直接判定不包含
      * <p>异常信息args支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
@@ -409,19 +408,6 @@ public interface ErxingExceptionAssert {
                     break;
             }
         }
-    }
-
-    /**
-     * 比较符号枚举<p>
-     * - EQ 等于     <p>
-     * - NE 不等于   <p>
-     * - GT 大于     <p>
-     * - GE 大于等于 <p>
-     * - LT 小于     <p>
-     * - LE 小于等于
-     */
-    enum CompareSymbolEnum {
-        LT, LE, EQ, NE, GE, GT;
     }
 
 }

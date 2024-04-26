@@ -231,3 +231,6 @@ public boolean vlaid(String account, Integer itemId) {
 
 ## 其他注意事项
 本项目依赖了2个包，`spring-boot-starter-web`和`lombok`,在打包时做了provided处理,因此如果您的项目没有这2个包,需要手动依赖
+
+
+## API

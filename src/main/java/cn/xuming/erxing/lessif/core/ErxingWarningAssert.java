@@ -1,6 +1,8 @@
 package cn.xuming.erxing.lessif.core;
 
 
+import cn.xuming.erxing.lessif.constant.CompareSymbolEnum;
+
 import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -9,8 +11,8 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * @Author: 徐铭
- * @Date: 2024-03-26 00:09
+ * @author: 徐铭
+ * @since: 2024-03-26 00:09
  */
 public interface ErxingWarningAssert {
 
@@ -105,7 +107,7 @@ public interface ErxingWarningAssert {
 
 
     /**
-     * <p>断言字符串<code>text</code>非空字符串。如果字符串<code>text<</code>为空或空字符串，则返回false，打印警告日志
+     * <p>断言字符串<code>text</code>非空字符串。如果字符串<code>text</code>为空或空字符串，则返回false，打印警告日志
      * <p>警告信息<code>args</code>支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param text 待判断对象
@@ -154,7 +156,7 @@ public interface ErxingWarningAssert {
 
 
     /**
-     * <p>断言Map<code>map</code>非空Map。如果Map<code>map</code>为空Map，则返回false，打印警告日志
+     * <p>断言<code>map</code>非空。如果<code>map</code>为空，则返回false，打印警告日志
      * <p>警告信息<code>args</code>支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param map  待判断Map
@@ -170,7 +172,7 @@ public interface ErxingWarningAssert {
     }
 
     /**
-     * <p>断言字符串<code>text</code>为空或空字符串。如果字符串<code>text<</code>为非空字符串，则返回false，打印警告日志
+     * <p>断言字符串<code>text</code>为空或空字符串。如果字符串<code>text</code>为非空字符串，则返回false，打印警告日志
      * <p>警告信息<code>args</code>支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
      * @param text 待判断对象
@@ -344,7 +346,7 @@ public interface ErxingWarningAssert {
     }
 
     /**
-     * <p>断言MAP<code>map</code>中KEY包含<code>text</code>。如果字符串数组<code>map</code>不包含<code>text</code>，则返回false，打印警告日志
+     * <p>断言<code>map</code>中KEY包含<code>text</code>。如果<code>map</code>中KEY不包含<code>text</code>，则返回false，打印警告日志
      * <code>text</code>,<code>map</code>任意一个为NULL，则直接判定不包含,抛出异常
      * <p>警告信息<code>args</code>支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
@@ -362,7 +364,7 @@ public interface ErxingWarningAssert {
     }
 
     /**
-     * <p>断言MAP<code>map</code>中KEY不包含<code>text</code>。如果字符串数组<code>map</code>包含<code>text</code>，则返回false，打印警告日志
+     * <p>断言<code>map</code>中KEY不包含<code>text</code>。如果<code>map</code>中KEY包含<code>text</code>，则返回false，打印警告日志
      * <code>text</code>,<code>map</code>任意一个为NULL，则直接判定不包含
      * <p>警告信息<code>args</code>支持传递参数方式，避免在判断之前进行字符串拼接操作
      *
@@ -496,6 +498,7 @@ public interface ErxingWarningAssert {
      * @param csEnum 期望断言结果
      * @param args   message占位符对应的参数列表
      * @return true验证通过, false验证不通过
+     * @param <T> 泛型
      */
     default <T extends Comparable<T>> boolean compare(T source, T target, CompareSymbolEnum csEnum, Object... args) {
         if (source == null) {
@@ -543,20 +546,6 @@ public interface ErxingWarningAssert {
                     return true;
             }
         }
-    }
-
-
-    enum CompareSymbolEnum {
-        /**
-         * 比较符号枚举<p>
-         * - EQ 等于     =<p>
-         * - NE 不等于   <><p>
-         * - GT 大于     ><p>
-         * - GE 大于等于 >=<p>
-         * - LT 小于     <<p>
-         * - LE 小于等于 <=
-         */
-        LT, LE, EQ, NE, GE, GT;
     }
 
 }
