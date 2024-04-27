@@ -138,6 +138,7 @@
                 <configuration>
                     <publishingServerId>sonatype</publishingServerId>
                     <tokenAuth>true</tokenAuth>
+                    <deploymentName>erxing-less-if_v${project.version}</deploymentName>
                 </configuration>
             </plugin>
         </plugins>
