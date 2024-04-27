@@ -33,12 +33,20 @@ public interface ErxingWarningAssert {
     String getMessage();
 
     /**
-     * 创建异常
+     * 打印日志
      *
      * @param args 提示信息
      */
     default void print(Object... args) {
-        logger.warning(MessageFormat.format(getMessage(), args));
+        logger.warning(warningMsg( args));
+    }
+    /**
+     * 输出警告信息
+     *
+     * @param args 提示信息
+     */
+    default String warningMsg(Object... args) {
+        return MessageFormat.format(getMessage(), args);
     }
 
     /**
