@@ -40,6 +40,8 @@ public interface ErxingWarningAssert {
      *
      * @param asset 断言方法返回值
      * @param args 提示信息
+     * @return true验证通过, false验证不通过并输出日志
+     *
      */
     default boolean assetPrint(boolean asset,Object... args) {
         if (!asset) {
@@ -52,6 +54,7 @@ public interface ErxingWarningAssert {
      * 输出警告信息
      *
      * @param args 提示信息
+     * @return 输出完整的警告信息
      */
     default String warningMsg(Object... args) {
         return MessageFormat.format(getMessage(), args);
